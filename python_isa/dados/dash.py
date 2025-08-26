@@ -14,7 +14,9 @@ print(tabela)
 st.title('📊Dashboard de vendas')
 
 # campo de seleção e filtro dos dados
-regioes = st.multiselect('Selecione as regiões', tabela['Região'].unique())
+
+st.sidebar.header("🔍 Filtros")
+regioes = st.sidebar.multiselect('Selecione as regiões', tabela['Região'].unique())
 
 if regioes:
     tabela = tabela[tabela['Região'].isin(regioes)] 
@@ -24,7 +26,7 @@ if regioes:
 st.metric('Faturamento total', f"R${tabela['Valor Venda'].sum()}")
 
 #ticket médio
-st.metric('Ticket médio', f"R${tabela['Valor Venda'].mean()}")
+st.metric('Ticket médio', f"R${tabela['Valor Venda'].median()}")
 
 # gráfico faturamento por região
 st.bar_chart(tabela.groupby('Região')['Valor Venda'].sum())
